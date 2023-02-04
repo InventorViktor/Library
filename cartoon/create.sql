@@ -1,0 +1,13 @@
+create sequence hibernate_sequence start with 1 increment by 1;
+create table character (id bigint not null, gender varchar(255), image varchar(255), name varchar(255), source_id integer not null, species varchar(255), status varchar(255), location_id bigint, origin_id bigint, primary key (id));
+create table characters_episodes (character_id bigint not null, episode_id bigint not null, primary key (character_id, episode_id));
+create table episode (id bigint not null, air_date varchar(255), name varchar(255), source_id integer not null, primary key (id));
+create table location (id bigint not null, dimension varchar(255), name varchar(255), source_id integer not null, type varchar(255), primary key (id));
+create table location_residents (location_id bigint not null, residents_id bigint not null);
+alter table location_residents add constraint UK_miwlyxj8mtar1uyqjafgjxo9j unique (residents_id);
+alter table character add constraint FKhkhaccxwfjjas7gs7tel4h8xf foreign key (location_id) references location;
+alter table character add constraint FKmsflsou1k9gygx6h4q2hn4o8s foreign key (origin_id) references location;
+alter table characters_episodes add constraint FKdqj0piu247brkpikq5w0it62p foreign key (episode_id) references episode;
+alter table characters_episodes add constraint FKep9epq6fn0pwj5su2x2i7mx3v foreign key (character_id) references character;
+alter table location_residents add constraint FKbb7orjk0p2yvitjryd9w1ruhy foreign key (residents_id) references character;
+alter table location_residents add constraint FKkvupxc9otdcm6400ajqylr587 foreign key (location_id) references location;
