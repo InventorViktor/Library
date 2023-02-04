@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Characters</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <link th:href="@{/colors.css}" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark m-2" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://localhost:8081/character/all">Library</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="http://localhost:8081/character/all">Characters</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8081/location/all">Locations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8081/episode/all">Episodes</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        <div class="col" th:each="character : ${characters}">
+            <div class="card border-light">
+                <img th:src="${character.image}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${character.name}"></h5>
+
+                    <p th:if="${character.status == 'Alive'}" class="card-text text-success"
+                       th:text="${character.status}"></p>
+
+                    <p th:if="${character.status == 'Dead'}" class="card-text text-danger"
+                       th:text="${character.status}"></p>
+
+                    <p th:if="${character.status == 'unknown'}" class="card-text text-secondary"
+                       th:text="${character.status}"></p>
+
+                    <span class="text-secondary">Species:</span>
+                    <p th:text="${character.getSpecies()}"></p>
+
+                    <span class="text-secondary">Last known location:</span>
+                    <p th:switch="${character.getLocationName()}">
+                        <span th:case="'unknown'" th:text="${character.getLocationName()}"></span>
+                        <a th:case="*"
+                           th:href="@{http://localhost:8081/location/search(name=${character.getLocationName()})}"
+                           th:text="${character.getLocationName()}" class="link-light"></a>
+                    </p>
+
+                    <span class="text-secondary">First seen in:</span>
+                    <p th:switch="${character.getOriginName()}">
+                        <span th:case="'unknown'" th:text="${character.getOriginName()}"></span>
+                        <a th:case="*"
+                           th:href="@{http://localhost:8081/location/search(name=${character.getOriginName()})}"
+                           th:text="${character.getOriginName()}" class="link-light"></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
