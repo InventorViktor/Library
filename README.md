@@ -70,3 +70,8 @@ The library of characters, locations and episodes from the Rick and Morty show. 
 | `name`       | `string` | **Required**. Location name       |
 | `page`       | `integer`| **Optional**. Page number         |
 
+
+## Screenshots
+
+![App Screenshot](https://github.com/InventorViktor/Library/blob/main/screenshots/main_page.png)
+![App Screenshot](https://github.com/InventorViktor/Library/blob/main/screenshots/search_rick.png)
